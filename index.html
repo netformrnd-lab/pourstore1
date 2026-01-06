@@ -404,6 +404,19 @@
                 <div class="error-msg">건물구조를 선택해주세요</div>
             </div>
 
+            <!-- 평수 -->
+            <div class="form-group">
+                <label>평수 <span class="required">*</span></label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="number" id="area" name="area" placeholder="숫자 입력" required style="flex: 1;">
+                    <select id="areaUnit" name="areaUnit" style="width: 100px;">
+                        <option value="평">평</option>
+                        <option value="㎡">㎡</option>
+                    </select>
+                </div>
+                <div class="error-msg">평수를 입력해주세요</div>
+            </div>
+
             <!-- 주소 -->
             <div class="form-group">
                 <label>주소 <span class="required">*</span></label>
@@ -570,6 +583,7 @@
                 customerType: document.getElementById('customerType').value,
                 workType: document.getElementById('constructionType').value,
                 buildingType: document.getElementById('buildingType').value,
+                area: document.getElementById('area').value + document.getElementById('areaUnit').value,
                 address: document.getElementById('address').value.trim(),
                 inquiry: document.getElementById('inquiry').value.trim(),
                 images: selectedPhotos.map(photo => ({
@@ -595,7 +609,7 @@
 
         function validateForm() {
             let isValid = true;
-            const requiredFields = ['name', 'phone', 'customerType', 'constructionType', 'buildingType', 'address'];
+            const requiredFields = ['name', 'phone', 'customerType', 'constructionType', 'buildingType', 'area', 'address'];
 
             requiredFields.forEach(fieldId => {
                 const field = document.getElementById(fieldId);
