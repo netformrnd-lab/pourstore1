@@ -452,7 +452,7 @@
     <script>
         // ==================== 설정 ====================
         const CONFIG = {
-            // Google Apps Script 웹앱 URL (여기에 실제 URL 입력)
+            // Google Apps Script 웹앱 URL
             WEBAPP_URL: 'https://script.google.com/macros/s/AKfycbzUHBJqtQVddKMhU60ObYwzHMMkKtGy4ne1lOjl6P8-NiyfJS0kEy4qPHwkFdr5bXvH/exec',
             MAX_PHOTOS: 5,
             MAX_FILE_SIZE: 10 * 1024 * 1024 // 10MB
@@ -562,17 +562,20 @@
             document.getElementById('requestForm').style.display = 'none';
             document.getElementById('loadingScreen').classList.add('show');
 
-            // 데이터 수집
+            // 데이터 수집 (기존 Apps Script 필드명에 맞춤)
             const formData = {
+                action: 'addConstructionRequest',
                 name: document.getElementById('name').value.trim(),
                 phone: document.getElementById('phone').value.trim(),
                 customerType: document.getElementById('customerType').value,
-                constructionType: document.getElementById('constructionType').value,
+                workType: document.getElementById('constructionType').value,
                 buildingType: document.getElementById('buildingType').value,
                 address: document.getElementById('address').value.trim(),
                 inquiry: document.getElementById('inquiry').value.trim(),
-                photos: selectedPhotos,
-                submittedAt: new Date().toLocaleString('ko-KR')
+                images: selectedPhotos.map(photo => ({
+                    data: photo.data.split(',')[1],  // base64 prefix 제거
+                    type: photo.data.split(';')[0].split(':')[1] || 'image/jpeg'
+                }))
             };
 
             try {
